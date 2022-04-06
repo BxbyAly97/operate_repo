@@ -15,7 +15,7 @@ pipeline {
             steps {
               sh '''#!/bin/bash
               targets=websvr_21051265;
-              locate_script='/21051265/script_dir';
+              locate_script='/21051265/script_dir/21051265_script';
               docker cp $locate_script $targets://$locate_script;
               bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
               '''
