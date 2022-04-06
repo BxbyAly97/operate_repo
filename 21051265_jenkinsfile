@@ -1,1 +1,36 @@
-
+pipeline {
+  agent any
+  stages { 
+        stage('21051265 Stage One') {
+              steps {
+                  echo "21051265 Start of Pipeline"
+              }
+        }
+        stage('21051265 Stage Two') {
+              steps {
+                input(message: "Push changes to Production?", ok: 'Proceed')
+              }
+        }
+        stage('21051265 Stage Three') {
+            steps {
+              sh '''#!/bin/bash
+              targets=websvr_21051265;
+              locate_script='/21051265/script_dir';
+              docker cp $locate_script $targets://$locate_script;
+              bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
+              '''
+              echo "Stage 3 Completed - 21051265"
+            }
+        }
+        stage('21051265 Stage Four') {
+            steps {
+               echo "Production website tested working"
+            }
+        }
+        stage('21051265 Stage Five') {
+            steps {
+               echo "Production website is updated successfully"
+            }
+        }
+  }
+}
